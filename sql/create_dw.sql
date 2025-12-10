@@ -21,11 +21,11 @@ CREATE TABLE IF NOT EXISTS dim_airport (
 	airport_id INT,
 	airport_code VARCHAR(10),
 	airport_name VARCHAR(100),
-	city VARCHAR(100),
-	country VARCHAR(50),
-	timezone VARCHAR(50),
-	latitude DECIMAL(9, 6),
-	longitude DECIMAL(9, 6)
+	airport_city VARCHAR(100),
+	airport_country VARCHAR(50),
+	airport_timezone VARCHAR(50),
+	airport_latitude DECIMAL(9, 6),
+	airport_longitude DECIMAL(9, 6)
 );
 
 CREATE TABLE IF NOT EXISTS dim_terminal (

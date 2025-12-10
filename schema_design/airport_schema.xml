@@ -1,0 +1,36 @@
+<Schema name="airport_schema">
+  <Dimension type="StandardDimension" visible="true" name="dim_time">
+    <Hierarchy name="time_hierarchy" visible="true" hasAll="true" primaryKey="time_sk" primaryKeyTable="dim_time">
+      <Level name="year" visible="true" table="dim_time" column="year" uniqueMembers="false">
+      </Level>
+      <Level name="semester" visible="true" table="dim_time" column="semester" parentColumn="year" uniqueMembers="false">
+      </Level>
+      <Level name="quarter" visible="true" table="dim_time" column="quarter" parentColumn="semester" uniqueMembers="false">
+      </Level>
+      <Level name="month" visible="true" table="dim_time" column="month" parentColumn="quarter" uniqueMembers="false">
+      </Level>
+      <Level name="day" visible="true" table="dim_time" column="day" parentColumn="month" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="dim_airport">
+    <Hierarchy name="airport_hierarchy" visible="true" hasAll="true" primaryKey="airport_sk" primaryKeyTable="dim_airport">
+      <Level name="airport_country" visible="true" table="dim_airport" column="airport_country" uniqueMembers="false">
+      </Level>
+      <Level name="airport_city" visible="true" table="dim_airport" column="airport_city" parentColumn="airport_country" uniqueMembers="false">
+      </Level>
+      <Level name="airport_name" visible="true" table="dim_airport" column="airport_name" parentColumn="airport_city" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="dim_airline">
+    <Hierarchy name="airline_hierarchy" visible="true" hasAll="true" primaryKey="airline_sk" primaryKeyTable="dim_airline">
+      <Level name="airline_alliance" visible="true" table="dim_airline" column="airline_alliance" uniqueMembers="false">
+      </Level>
+      <Level name="airline_country" visible="true" table="dim_airline" column="airline_country" parentColumn="airline_alliance" uniqueMembers="false">
+      </Level>
+      <Level name="airline_name" visible="true" table="dim_airline" column="airline_name" parentColumn="airline_country" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+</Schema>
