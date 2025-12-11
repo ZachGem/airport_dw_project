@@ -1,36 +1,143 @@
 <Schema name="airport_schema">
-  <Dimension type="StandardDimension" visible="true" name="dim_time">
-    <Hierarchy name="time_hierarchy" visible="true" hasAll="true" primaryKey="time_sk" primaryKeyTable="dim_time">
-      <Level name="year" visible="true" table="dim_time" column="year" uniqueMembers="false">
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="dim_time">
+    <Hierarchy name="time_hierarchy" visible="true" hasAll="true" primaryKey="time_sk">
+      <Table name="dim_time" schema="public" alias="">
+      </Table>
+      <Level name="year" visible="true" table="dim_time" column="year" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
-      <Level name="semester" visible="true" table="dim_time" column="semester" parentColumn="year" uniqueMembers="false">
+      <Level name="semester" visible="true" table="dim_time" column="semester" parentColumn="year" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
-      <Level name="quarter" visible="true" table="dim_time" column="quarter" parentColumn="semester" uniqueMembers="false">
+      <Level name="quarter" visible="true" table="dim_time" column="quarter" parentColumn="semester" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
-      <Level name="month" visible="true" table="dim_time" column="month" parentColumn="quarter" uniqueMembers="false">
+      <Level name="month" visible="true" table="dim_time" column="month" parentColumn="quarter" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
-      <Level name="day" visible="true" table="dim_time" column="day" parentColumn="month" uniqueMembers="false">
-      </Level>
-    </Hierarchy>
-  </Dimension>
-  <Dimension type="StandardDimension" visible="true" name="dim_airport">
-    <Hierarchy name="airport_hierarchy" visible="true" hasAll="true" primaryKey="airport_sk" primaryKeyTable="dim_airport">
-      <Level name="airport_country" visible="true" table="dim_airport" column="airport_country" uniqueMembers="false">
-      </Level>
-      <Level name="airport_city" visible="true" table="dim_airport" column="airport_city" parentColumn="airport_country" uniqueMembers="false">
-      </Level>
-      <Level name="airport_name" visible="true" table="dim_airport" column="airport_name" parentColumn="airport_city" uniqueMembers="false">
+      <Level name="day" visible="true" table="dim_time" column="day" parentColumn="month" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
   </Dimension>
-  <Dimension type="StandardDimension" visible="true" name="dim_airline">
-    <Hierarchy name="airline_hierarchy" visible="true" hasAll="true" primaryKey="airline_sk" primaryKeyTable="dim_airline">
-      <Level name="airline_alliance" visible="true" table="dim_airline" column="airline_alliance" uniqueMembers="false">
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="dim_airport">
+    <Hierarchy name="airport_hierarchy" visible="true" hasAll="true" primaryKey="airport_sk">
+      <Table name="dim_airport" schema="public"/>
+
+      <Level name="airport_country" visible="true" table="dim_airport" column="airport_country" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
-      <Level name="airline_country" visible="true" table="dim_airline" column="airline_country" parentColumn="airline_alliance" uniqueMembers="false">
+      <Level name="airport_city" visible="true" table="dim_airport" column="airport_city" parentColumn="airport_country" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
-      <Level name="airline_name" visible="true" table="dim_airline" column="airline_name" parentColumn="airline_country" uniqueMembers="false">
+      <Level name="airport_name" visible="true" table="dim_airport" column="airport_name" parentColumn="airport_city" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
   </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="dim_airline">
+    <Hierarchy name="airline_hierarchy" visible="true" hasAll="true" primaryKey="airline_sk">
+      <Table name="dim_airline" schema="public" alias=""/>
+
+      <Level name="airline_alliance" visible="true" table="dim_airline" column="airline_alliance" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="airline_country" visible="true" table="dim_airline" column="airline_country" parentColumn="airline_alliance" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="airline_name" visible="true" table="dim_airline" column="airline_name" parentColumn="airline_country" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="dim_aircraft">
+    <Hierarchy name="aircraft_hierarchy" visible="true" hasAll="true" primaryKey="aircraft_sk">
+      <Table name="dim_aircraft" schema="public" alias=""/>
+
+      <Level name="aircraft_type" visible="true" table="dim_aircraft" column="aircraft_type" uniqueMembers="false">
+      </Level>
+      <Level name="aircraft_registration_number" visible="true" table="dim_aircraft" column="aircraft_registration_number" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="dim_terminal">
+    <Hierarchy name="terminal_hierarchy" visible="true" hasAll="true" primaryKey="terminal_sk">
+      <Table name="dim_terminal" schema="public"/>
+
+      <Level name="terminal_type" visible="true" table="dim_terminal" column="terminal_type" uniqueMembers="false">
+      </Level>
+      <Level name="terminal_capacity" visible="true" table="dim_terminal" column="terminal_capacity" parentColumn="terminal_type" uniqueMembers="false">
+      </Level>
+      <Level name="terminal_code" visible="true" table="dim_terminal" column="terminal_code" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="dim_gate">
+    <Hierarchy name="gate_hierarchy" visible="true" hasAll="true" primaryKey="gate_sk">
+      <Table name="dim_gate" schema="public"/>
+
+      <Level name="gate_type" visible="true" table="dim_gate" column="gate_type" uniqueMembers="false">
+      </Level>
+      <Level name="gate_code" visible="true" table="dim_gate" column="gate_code" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="dim_flight">
+    <Hierarchy name="flight_hierarchy" visible="true" hasAll="true">
+      <Table name="dim_flight" schema="public"/>
+
+      <Level name="flight_status" visible="true" table="dim_flight" column="flight_status" uniqueMembers="false">
+      </Level>
+      <Level name="flight_number" visible="true" table="dim_flight" column="flight_number" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="flights_cube" visible="true" cache="true" enabled="true">
+    <Table name="fact_flights" schema="public"/>
+    <DimensionUsage source="dim_time" name="Time" visible="true" foreignKey="time_sk">
+    </DimensionUsage>
+    <DimensionUsage source="dim_airport" name="Airport" visible="true" foreignKey="airport_sk">
+    </DimensionUsage>
+    <DimensionUsage source="dim_airline" name="Airline" visible="true" foreignKey="airline_sk">
+    </DimensionUsage>
+    <DimensionUsage source="dim_aircraft" name="Aircraft" visible="true" foreignKey="aircraft_sk">
+    </DimensionUsage>
+    <DimensionUsage source="dim_terminal" name="Terminal" visible="true" foreignKey="terminal_sk">
+    </DimensionUsage>
+    <DimensionUsage source="dim_gate" name="Gate" visible="true" foreignKey="gate_sk">
+    </DimensionUsage>
+    <DimensionUsage source="dim_flight" name="Flight" visible="true" foreignKey="flight_sk">
+    </DimensionUsage>
+    <Measure name="Total delay arrival" column="delay_arrival_minutes" datatype="Integer" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Average delay arrival" column="delay_arrival_minutes" datatype="Integer" aggregator="avg" visible="true">
+    </Measure>
+    <Measure name="Max delay arrival" column="delay_arrival_minutes" aggregator="max" visible="true">
+    </Measure>
+    <Measure name="Min delay arrival" column="delay_arrival_minutes" aggregator="min" visible="true">
+    </Measure>
+    <Measure name="Total delay departure" column="delay_departure_minutes" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Average delay departure" column="delay_departure_minutes" aggregator="avg" visible="true">
+    </Measure>
+    <Measure name="Max delay departure" column="delay_departure_minutes" aggregator="max" visible="true">
+    </Measure>
+    <Measure name="Min delay departure" column="delay_departure_minutes" aggregator="min" visible="true">
+    </Measure>
+    <Measure name="Average passenger capacity" column="passenger_capacity" aggregator="avg" visible="true">
+    </Measure>
+    <Measure name="Max passenger capacity" column="passenger_capacity" aggregator="max" visible="true">
+    </Measure>
+    <Measure name="Min passenger capacity" column="passenger_capacity" aggregator="min" visible="true">
+    </Measure>
+    <Measure name="Total passengers onboard" column="passenger_onboard" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Average passengers onboard" column="passenger_onboard" aggregator="avg" visible="true">
+    </Measure>
+    <Measure name="Max passengers onboard" column="passenger_onboard" aggregator="max" visible="true">
+    </Measure>
+    <Measure name="Min passengers onboard" column="passenger_onboard" aggregator="min" visible="true">
+    </Measure>
+    <Measure name="Average flight duration" column="flight_duration" aggregator="avg" visible="true">
+    </Measure>
+    <Measure name="Max flight duration" column="flight_duration" aggregator="max" visible="true">
+    </Measure>
+    <Measure name="Min flight duration" column="flight_duration" aggregator="min" visible="true">
+    </Measure>
+    <Measure name="Average occupency rate" column="occupancy_rate" aggregator="avg" visible="true">
+    </Measure>
+    <Measure name="Max occupency rate" column="occupancy_rate" aggregator="max" visible="true">
+    </Measure>
+    <Measure name="Min occupency rate" column="occupancy_rate" aggregator="min" visible="true">
+    </Measure>
+  </Cube>
 </Schema>
